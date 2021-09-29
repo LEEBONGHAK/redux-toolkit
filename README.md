@@ -58,4 +58,7 @@ const reducer = createReducer(defaultLocalStorage, {
 위 코드에서 볼 수 있듯이 `createReducer`는 state를 mutate하거나 새로운 state를 만들어 return할 수 있다.  
 그러나 동시에 사용하지 못하며, state를 mutate하면 return하지 못하고 반대로 새로운 state를 return하면 state를 mutate하지 못한다.  
   
+## configureStore({ reducer })  
   
+Chrome 웹 스토어에서 [Redux DevTools](https://chrome.google.com/webstore/detail/redux-devtools/lmhkpmbekcpmknklioeibfkpmmfibljd?hl=ko&)를 사용하게 할 수 있다.  
+Redux DevTools는 state의 상태 등을 보기 편하게 만들어 준다.  

@@ -1,6 +1,5 @@
 import { v4 as uuidv4 } from 'uuid';
-import { createStore } from 'redux';
-import { createAction, createReducer } from '@reduxjs/toolkit';
+import { createAction, createReducer, configureStore } from '@reduxjs/toolkit';
 
 const TODOS_LS = "toDos";
 
@@ -19,19 +18,6 @@ if (savedToDos !== null) {
 const addToDo = createAction("ADD");
 const deleteToDo = createAction("DELETE");
 
-// const reducer = (state = defaultLocalStorage, action) => {
-//   switch (action.type) {
-//     case addToDo.type:
-//       return [{ text: action.payload, id: uuidv4() }, ...state ];
-//     case deleteToDo.type:
-//       const newState = state.filter(toDo => toDo.id !== action.payload);
-//       saveToDos(newState);
-//       return newState;
-//     default:
-//       return state;
-//   }
-// };
-
 const reducer = createReducer(defaultLocalStorage, {
   [addToDo]: (state, action) => {
     state.push({ text: action.payload, id: uuidv4() });
@@ -43,7 +29,7 @@ const reducer = createReducer(defaultLocalStorage, {
   }
 });
 
-const store = createStore(reducer);
+const store = configureStore({ reducer });
 
 export const actionCreators = {
   addToDo,
