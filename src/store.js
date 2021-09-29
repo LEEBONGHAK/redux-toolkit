@@ -1,10 +1,8 @@
 import { v4 as uuidv4 } from 'uuid';
 import { createStore } from 'redux';
+import { createAction } from '@reduxjs/toolkit';
 
 const TODOS_LS = "toDos";
-
-const ADD = "ADD";
-const DELETE = "DELETE";
 
 // local storage 저장 함수
 const saveToDos = (toDos) => {
@@ -18,26 +16,15 @@ if (savedToDos !== null) {
   defaultLocalStorage = JSON.parse(savedToDos);
 }
 
-const addToDo = (text) => {
-  return {
-    type: ADD,
-    text
-  };
-}
-
-const deleteToDo = (id) => {
-  return {
-    type: DELETE,
-    id
-  };
-}
+const addToDo = createAction("ADD");
+const deleteToDo = createAction("DELETE");
 
 const reducer = (state = defaultLocalStorage, action) => {
   switch (action.type) {
-    case ADD:
-      return [{ text: action.text, id: uuidv4() }, ...state ];
-    case DELETE:
-      const newState = state.filter(toDo => toDo.id !== action.id);
+    case addToDo.type:
+      return [{ text: action.payload, id: uuidv4() }, ...state ];
+    case deleteToDo.type:
+      const newState = state.filter(toDo => toDo.id !== action.payload);
       saveToDos(newState);
       return newState;
     default:

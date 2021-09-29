@@ -24,7 +24,7 @@ const Home = ({ toDos, addToDo, saveToDos }) => {
         <button>Add</button>
       </form>
       <ul>
-        {JSON.stringify(toDos)}
+        Local Storage: {JSON.stringify(toDos)}
         {toDos.map(toDo => (<ToDo {...toDo} key={toDo.id} />))}
       </ul>
     </>
