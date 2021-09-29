@@ -3,6 +3,7 @@
 Learning Redux Toolkit  
 Edit [react-redux toDo page using](https://github.com/LEEBONGHAK/react-redux) Redux Toolkit  
 Lecture : [초보자를 위한 리덕스 101](https://nomadcoders.co/redux-for-beginners) by nomadcoder  
+Redux Toolkit 공식문서 [바로가기](https://redux-toolkit.js.org/introduction/getting-started)
   
 Redux Toolkit
  - 많은 양의 코드(Boilerplate Code)를 써야하는 Redux를 위해 Redux 커뮤니티가 제안한 것
