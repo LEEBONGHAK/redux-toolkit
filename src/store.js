@@ -1,10 +1,10 @@
 import { v4 as uuidv4 } from 'uuid';
-import { createAction, createReducer, configureStore } from '@reduxjs/toolkit';
+import { configureStore, createSlice } from '@reduxjs/toolkit';
 
 const TODOS_LS = "toDos";
 
 // local storage 저장 함수
-const saveToDos = (toDos) => {
+export const saveToDos = (toDos) => {
   localStorage.setItem(TODOS_LS, JSON.stringify(toDos));
 }
 
@@ -15,26 +15,23 @@ if (savedToDos !== null) {
   defaultLocalStorage = JSON.parse(savedToDos);
 }
 
-const addToDo = createAction("ADD");
-const deleteToDo = createAction("DELETE");
-
-const reducer = createReducer(defaultLocalStorage, {
-  [addToDo]: (state, action) => {
-    state.push({ text: action.payload, id: uuidv4() });
-  },
-  [deleteToDo]: (state, action) => {
-    const newState = state.filter(toDo => toDo.id !== action.payload);
-    saveToDos(newState);
-    return newState;
+const toDos = createSlice({
+  name: 'toDosReducer',
+  initialState: defaultLocalStorage,
+  reducers: {
+    add: (state, action) => {
+      state.push({ text: action.payload, id: uuidv4() });
+    },
+    remove: (state, action) => {
+      const newState = state.filter(toDo => toDo.id !== action.payload);
+      saveToDos(newState);
+      return newState;
+    }
   }
-});
+})
 
-const store = configureStore({ reducer });
+const store = configureStore({ reducer: toDos.reducer });
 
-export const actionCreators = {
-  addToDo,
-  deleteToDo,
-  saveToDos
-};
+export const { add, remove } = toDos.actions;
 
 export default store;

@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { actionCreators } from '../store';
+import { remove } from '../store';
 import { Link } from 'react-router-dom';
 
 const Detail = ({ toDo, onBtnClick }) => {
@@ -32,7 +32,7 @@ const mapDispatchToProps = (dispatch, ownProps) => {
     }
   } = ownProps;
   return {
-    onBtnClick: () => (dispatch(actionCreators.deleteToDo(id)))
+    onBtnClick: () => (dispatch(remove(id)))
   };
 }
 

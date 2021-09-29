@@ -62,3 +62,50 @@ const reducer = createReducer(defaultLocalStorage, {
   
 Chrome 웹 스토어에서 [Redux DevTools](https://chrome.google.com/webstore/detail/redux-devtools/lmhkpmbekcpmknklioeibfkpmmfibljd?hl=ko&)를 사용하게 할 수 있다.  
 Redux DevTools는 state의 상태 등을 보기 편하게 만들어 준다.  
+  
+## createSlice()
+  
+`creteSlice`는 `reducer`뿐만아니라 `action`도 생성해주는 함수이다.
+  
+```
+const reducer = createReducer(defaultLocalStorage, {
+  [addToDo]: (state, action) => {
+    state.push({ text: action.payload, id: uuidv4() });
+  },
+  [deleteToDo]: (state, action) => {
+    const newState = state.filter(toDo => toDo.id !== action.payload);
+    saveToDos(newState);
+    return newState;
+  }
+});
+
+const store = createStore(reducer);
+
+export const actionCreators = {
+  addToDo,
+  deleteToDo
+};
+```  
+  
+따라서 위와 같은 코드를 아래와 같이 줄일 수 있다.  
+  
+```
+const toDos = createSlice({
+  name: 'toDosReducer',
+  initialState: defaultLocalStorage,
+  reducers: {
+    add: (state, action) => {
+      state.push({ text: action.payload, id: uuidv4() });
+    },
+    remove: (state, action) => {
+      const newState = state.filter(toDo => toDo.id !== action.payload);
+      saveToDos(newState);
+      return newState;
+    }
+  }
+})
+
+const store = configureStore({ reducer: toDos.reducer });
+
+export const { add, remove } = toDos.actions;
+```  
